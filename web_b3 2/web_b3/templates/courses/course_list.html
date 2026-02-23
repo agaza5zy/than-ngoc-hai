@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="text-center mb-5">
+    <h1>Danh sách Khóa học</h1>
+    <p class="lead">Chào mừng bạn đến với cổng thông tin học tập trực tuyến.</p>
+</div>
+
+<div class="row">
+    {% for course in courses %}
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title text-primary">{{ course.title }}</h5>
+                <p class="card-text">{{ course.description }}</p>
+            </div>
+            <div class="card-footer bg-white border-top-0">
+               <a href="{% url 'course_detail' course.pk %}" class="btn btn-outline-primary w-100">Xem chi tiết</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12 text-center">
+        <p>Chưa có khóa học nào. Hãy vào Admin để thêm.</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
