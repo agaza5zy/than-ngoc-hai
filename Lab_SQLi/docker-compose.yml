@@ -1,0 +1,18 @@
+services: 
+  db-server:
+    image: mysql:5.7
+    env_file: 
+      - .env
+    ports:
+      - "3306:3306"
+  web-app:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8080:8000"
+    volumes:
+      - .:/code
+    env_file: 
+      - .env
+    depends_on:
+      - db-server 
