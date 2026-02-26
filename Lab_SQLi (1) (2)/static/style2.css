@@ -104,21 +104,21 @@ body {
 
 /* Ảnh Gallery */
 .gallery-grid {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
+    display: flex; /* Kích hoạt flexbox */
+    flex-wrap: wrap; /* Cho phép các phần tử xuống hàng khi hết chiều rộng */
+    justify-content: center; /* Căn giữa các ảnh */
+    gap: 20px; /* Tạo khoảng cách giữa các tấm ảnh */
+    padding: 20px;
 }
 
 .image-card {
-    width: 400px;
-    height: 220px;
-    border-radius: 25px;
-    overflow: hidden;
-    border: 2px solid rgba(255, 255, 255, 0.2);
+    width: 200px; /* Cố định chiều rộng của mỗi card ảnh */
+    text-align: center;
 }
 
 .image-card img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    width: 100%; /* Ảnh sẽ chiếm hết 200px của card */
+    height: auto;
+    border-radius: 10px;
+    object-fit: cover; /* Giữ tỉ lệ ảnh không bị móp */
 }
