@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS wallpapers (
 CREATE TABLE IF NOT EXISTS secret_data (
     id INT AUTO_INCREMENT PRIMARY KEY,
     content VARCHAR(255)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO secret_data (content) VALUES ('FLAG{SQL_INJECTION_SUCCESS_NHOM7}');
 
@@ -75,4 +75,5 @@ INSERT INTO wallpapers (title, image_path, category) VALUES
 ('Trái đất nền đen 5', 'anh-nen-dien-thoai-hinh-trai-dat-nen-den-5-30-14-04-43.jpg', 'phone'),
 ('Trái đất nền đen 4', 'anh-nen-dien-thoai-hinh-trai-dat-nen-den-4-30-14-04-22.jpg', 'phone'),
 ('Trái đất nền đen 3', 'anh-nen-dien-thoai-hinh-trai-dat-nen-den-3-30-14-03-58.jpg', 'phone');
+
 
