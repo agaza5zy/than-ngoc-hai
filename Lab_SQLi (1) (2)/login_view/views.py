@@ -45,6 +45,8 @@ def logout_view(request):
     return redirect('login')
 
 def index(request):
+    if 'user_id' not in request.session:
+        return redirect('login')
     query_param = request.GET.get('q', '')
     
     sql = "SELECT id, title, image_path, category FROM wallpapers WHERE title LIKE '" + query_param + "%'"
