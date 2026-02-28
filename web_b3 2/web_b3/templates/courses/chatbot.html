@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center mt-4">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">🤖 Trợ lý AI Thông minh</h5>
+            </div>
+            <div class="card-body" id="chat-box" style="height: 400px; overflow-y: auto; background: #f8f9fa;">
+                <div class="mb-3">
+                    <span class="badge bg-secondary">AI:</span><br>
+                    <div class="alert alert-info d-inline-block py-2 px-3 mt-1 shadow-sm">
+                        Chào bạn! Tôi có thể giúp bạn tìm khóa học, sách trong thư viện, vé máy bay hoặc trả lời các câu hỏi học tập.
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="input-group">
+                    <input type="text" id="user-input" class="form-control" placeholder="Nhập câu hỏi hoặc tên khóa học...">
+                    <button class="btn btn-primary" id="send-btn">Gửi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const chatBox = document.getElementById('chat-box');
+    const userInput = document.getElementById('user-input');
+    const sendBtn = document.getElementById('send-btn');
+
+    function appendMessage(sender, text, isUser) {
+        const div = document.createElement('div');
+        div.className = "mb-3 " + (isUser ? 'text-end' : '');
+        div.innerHTML = `
+            <span class="badge ${isUser ? 'bg-primary' : 'bg-secondary'}">${sender}:</span><br>
+            <div class="alert ${isUser ? 'alert-primary' : 'alert-info'} d-inline-block py-2 px-3 mt-1 shadow-sm">
+                ${text}
+            </div>`;
+        chatBox.appendChild(div);
+        chatBox.scrollTop = chatBox.scrollHeight; // Tự động cuộn xuống dưới cùng
+    }
+
+    sendBtn.onclick = function() {
+        const msg = userInput.value.trim();
+        if (!msg) return;
+        
+        appendMessage('Bạn', msg, true);
+        userInput.value = '';
+
+        // Gọi API lên server
+        fetch(`/chat-api/?msg=${encodeURIComponent(msg)}`)
+            .then(res => res.json())
+            .then(data => appendMessage('AI', data.response, false))
+            .catch(err => appendMessage('AI', 'Đã có lỗi xảy ra kết nối!', false));
+    };
+
+    // Bấm Enter để gửi
+    userInput.addEventListener("keypress", function(e) {
+        if (e.key === "Enter") sendBtn.click();
+    });
+</script>
+{% endblock %}
