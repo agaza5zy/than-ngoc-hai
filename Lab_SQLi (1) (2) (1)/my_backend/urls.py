@@ -32,6 +32,8 @@ urlpatterns = [
     path('upload/', views.upload_image_view, name='upload_image'),
     path('profile/', views.profile_view, name='profile'),
     path('admin-panel/', views.admin_dashboard_view, name='admin_dashboard'),
+    path('admin-manage/', views.manage_members_view, name='admin_manage'),
     path('approve/<int:image_id>/', views.approve_image_view, name='approve_image'),
+    path('reject/<int:image_id>/', views.reject_image_view, name='reject_image'),
 ] + static(settings.STATIC_URL, document_root=os.path.join(settings.BASE_DIR, 'static'))
 

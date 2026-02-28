@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý thành viên - Admin</title>
+    <link rel="stylesheet" href="{% static 'style2.css' %}">
+</head>
+<body>
+     <div class="main-wrapper">
+        <header class="navbar">
+            <div class="logo">ADMIN <span>PANEL</span></div>
+            <nav class="nav-links">
+                <a href="{% url 'home' %}">Home</a>
+                <a href="{% url 'admin_dashboard' %}">QUẢN TRỊ</a>
+            </nav>
+        </header>
+
+        <main class="container">
+            <h1>Danh sách các người dùng</h1>
+
+            <table class="glass-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Role</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for member in members %}
+            <tr>
+                <td>{{ member.id }}</td>
+                <td>{{ member.username }}</td>
+                <td>{{ member.email }}</td>
+                <td>{{ member.role }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" style="text-align: center;">Chưa có thành viên nào!</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+        </main>
+     </div>
+</body>

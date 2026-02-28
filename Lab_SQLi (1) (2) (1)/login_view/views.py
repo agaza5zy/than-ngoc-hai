@@ -260,3 +260,45 @@ def approve_image_view(request, image_id):
         cursor.execute(query)
     
     return redirect('admin_dashboard')
+def reject_image_view(request, image_id):
+    if not request.session.get('is_admin'):
+        return redirect('login')
+
+    with connection.cursor() as cursor:
+        # 1. Tìm đường dẫn file ảnh trong DB trước khi xóa
+        cursor.execute("SELECT image_path FROM wallpapers WHERE id = %s", [image_id])
+        row = cursor.fetchone()
+        
+        if row:
+            db_path = row[0] # Ví dụ: 'uploads/abc.jpg'
+            # 2. Xóa file trên ổ cứng
+            full_path = os.path.join(settings.BASE_DIR, 'static', db_path)
+            if os.path.exists(full_path):
+                os.remove(full_path)
+            
+            # 3. Xóa record trong DB
+            cursor.execute("DELETE FROM wallpapers WHERE id = %s", [image_id])
+    
+    return redirect('admin_dashboard')
+
+def manage_members_view(request):
+    # Khóa cửa Backend
+    if not request.session.get('is_admin'):
+        return redirect('home')
+
+    members_data = [] # Tạo cái thùng hàng
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT id, name, email, role FROM users")
+        rows = cursor.fetchall()
+        
+        for row in rows:
+            # Ở đây mình map (ánh xạ) dữ liệu từ DB vào cái tên mà HTML đang dùng
+            members_data.append({
+                'id': row[0],
+                'username': row[1], # Đảm bảo tên 'username' khớp với {{ member.username }} trong HTML
+                'email': row[2],
+                'role': 'Administrator' if row[3] == 1 else 'User'
+            })
+
+    # TRUYỀN ĐÚNG TÊN 'members' ĐỂ HTML NHẬN ĐƯỢC
+    return render(request, 'admin-manage.html', {'members': members_data})
