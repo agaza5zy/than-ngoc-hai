@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khám Phá Hình Nền</title>
+    <link rel="stylesheet" href="{% static 'style2.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="main-wrapper">
+        <header class="navbar">
+            <div class="logo">NHOM 7 <span>SQL LAB</span></div>
+            <nav class="nav-links">
+                <a href="{% url 'home' %}" style="color: white; text-decoration: none;">Home</a>
+            
+                {% if request.session.is_admin %}
+                <a href="{% url 'admin_dashboard' %}" style="color: #f1c40f; font-weight: bold; margin-left: 20px; text-decoration: none;">
+                    <i class="fas fa-user-shield"></i> QUẢN TRỊ
+                </a>
+                {% endif %}
+                </nav>
+            <div class="user-profile">
+                <a href="{% url 'profile' %}" style="color: white; text-decoration: none; margin-right: 20px;">
+                    <i class="fas fa-user-circle"></i> Trang cá nhân
+                </a>
+                
+                <a href="{% url 'upload_image' %}" style="color: white; text-decoration: none; margin-right: 20px;">
+                    <i class="fas fa-plus-circle"></i> Upload
+                </a>
+                <a href="{% url 'logout' %}" style="color: white; text-decoration: none;">Logout</a>
+            </div>
+        </header>
+
+        <main class="container">
+            <h1 class="main-title">Khám phá hình nền chất lượng cao</h1>
+            
+            <div class="search-wrapper">
+                <form class="search-box" method="GET" action="{% url 'search' %}">
+                    <input type="text" name="q" placeholder="Tìm kiếm hình nền...">
+                    <button type="submit" class="btn-search">
+                        <i class="fas fa-search"></i> Tìm kiếm
+                    </button>
+                </form>
+            </div>
+
+            <div class="gallery-grid">
+                {% for wallpaper in wallpapers %}
+                <div class="image-card">
+                    <img src="{% static wallpaper.image_path %}" alt="{{ wallpaper.title }}">
+                    
+                    <p class="image-title" style="color: white; margin-top: 10px; font-weight: bold; font-size: 14px;">
+                        {{ wallpaper.title }}
+                    </p>
+                </div>
+                {% empty %}
+                <p style="color: white;">Không tìm thấy hình nền nào phù hợp.</p>
+                {% endfor %}
+            </div>
+        </main>
+    </div>
+</body>
+</html>
