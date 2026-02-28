@@ -1,0 +1,98 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đóng góp hình nền - NHOM 7</title>
+    <link rel="stylesheet" href="{% static 'style2.css' %}"> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Thêm một chút style bổ sung cho form để khớp với style2.css */
+        .upload-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: bold; }
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(0, 0, 0, 0.2);
+            color: white;
+        }
+        .btn-upload {
+            background: #fff;
+            color: #333;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.3s;
+        }
+        .btn-upload:hover { background: #ddd; }
+    </style>
+</head>
+<body>
+    <div class="main-wrapper">
+        <header class="navbar">
+            <div class="logo">NHOM 7 <span>SQL LAB</span></div>
+            <nav class="nav-links">
+                <a href="{% url 'home' %}" style="color: white; text-decoration: none;">Home</a>
+            </nav>
+            <div class="user-profile">
+                <a href="{% url 'logout' %}" style="color: white; text-decoration: none;">Logout</a>
+            </div>
+        </header>
+
+        <main class="container">
+            <h1 class="main-title">Tải lên hình nền mới</h1>
+            
+            <div class="upload-container">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label>Tiêu đề hình ảnh</label>
+                        <input type="text" name="title" placeholder="Ví dụ: Hoàng hôn trên biển..." required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Thể loại</label>
+                        <input type="text" name="category" placeholder="Ví dụ: Nature, Anime..." required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Chế độ đăng ảnh</label>
+                        <select name="is_private" style="width: 100%; padding: 12px; border-radius: 8px; background: rgba(0, 0, 0, 0.2); color: white; border: 1px solid rgba(255, 255, 255, 0.3);">
+                            <option value="0">Công khai (Cần Admin duyệt để lên Home)</option>
+                            <option value="1">Riêng tư (Chỉ hiện trong trang cá nhân)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Chọn file ảnh</label>
+                        <input type="file" name="wallpaper_file" accept="image/*" required>
+                    </div>
+
+                    <button type="submit" class="btn-upload">
+                        <i class="fas fa-cloud-upload-alt"></i> Bắt đầu tải lên
+                    </button>
+
+                    {% if error %}
+                    <p style="color: #ff6b6b; margin-top: 15px; text-align: center;">{{ error }}</p>
+                    {% endif %}
+                </form>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
