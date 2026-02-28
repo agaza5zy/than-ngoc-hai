@@ -18,6 +18,7 @@ services:
       - .env
     depends_on:
       - db-server 
+  #Thêm WAF
   waf:
     image: owasp/modsecurity-crs:nginx
     ports:
@@ -26,3 +27,4 @@ services:
     - BACKEND=http://web-app:8000
     depends_on:
     - web-app
+  
