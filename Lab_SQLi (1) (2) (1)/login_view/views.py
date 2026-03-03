@@ -257,6 +257,5 @@ def member_logs_view(request, user_id):
                     'created_at': row[3]
                 })
         return render(request, 'log.html', {'logs': logs, 'user_id': user_id, 'user_name': user_name})
-    except Exception as e:
-        print("LỖI THẬT SỰ LÀ:", e) # Dòng này sẽ in lỗi ra Terminal
-        raise e
+    except Exception:
+        return render(request, 'error.html',status=500)
