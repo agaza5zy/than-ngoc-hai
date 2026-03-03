@@ -35,5 +35,6 @@ urlpatterns = [
     path('admin-manage/', views.manage_members_view, name='admin_manage'),
     path('approve/<int:image_id>/', views.approve_image_view, name='approve_image'),
     path('reject/<int:image_id>/', views.reject_image_view, name='reject_image'),
+    path('logs/<int:user_id>/', views.member_logs_view, name='logs'),
 ] + static(settings.STATIC_URL, document_root=os.path.join(settings.BASE_DIR, 'static'))
 

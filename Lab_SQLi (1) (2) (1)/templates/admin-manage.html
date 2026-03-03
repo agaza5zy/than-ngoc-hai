@@ -12,7 +12,7 @@
             <div class="logo">ADMIN <span>PANEL</span></div>
             <nav class="nav-links">
                 <a href="{% url 'home' %}">Home</a>
-                <a href="{% url 'admin_dashboard' %}">QUẢN TRỊ</a>
+                <a href="{% url 'admin_dashboard' %}">Quản trị</a>
             </nav>
         </header>
 
@@ -32,7 +32,9 @@
             {% for member in members %}
             <tr>
                 <td>{{ member.id }}</td>
-                <td>{{ member.username }}</td>
+                <td>
+                    <a href="{% url 'logs' member.id %}">{{ member.username }}</a>
+                </td>
                 <td>{{ member.email }}</td>
                 <td>{{ member.role }}</td>
             </tr>

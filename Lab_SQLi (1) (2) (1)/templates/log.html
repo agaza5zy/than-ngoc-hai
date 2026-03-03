@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Nhật Ký Hoạt Động</title>
+    <link rel="stylesheet" href="{% static 'style2.css' %}">
+</head>
+<body>
+    <div class="main-wrapper">
+        <header class="navbar">
+            <div class="logo">ADMIN <span>PANEL</span></div>
+            <nav class="nav-links">
+                <a href="{% url 'home' %}">Home</a>
+            </nav>
+        </header>
+        <main class="container">
+            <h1>Nhật Ký Hoạt Động của user #{{ user_name}}</h1>
+            <table class="glass-table">
+                <thead>
+                    <tr>
+                        <th>Tên ảnh</th>
+                        <th>Trạng thái</th>
+                        <th>Quyền riêng tư</th>
+                        <th>Ngày đăng</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for log in logs %}
+                    <tr>
+                        <td>{{ log.title }}</td>
+                        <td>{{ log.status }}</td>
+                        <td>{{ log.privacy }}</td>
+                        <td>{{ log.created_at }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" style="text-align:center;">Chưa có log.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <br>
+            <a href="{% url 'admin-manage' %}">&larr;Quay lại danh sách</a>
+        </main>
+    </div>
+</body>
+</html>
