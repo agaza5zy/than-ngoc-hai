@@ -7,6 +7,17 @@ services:
       - "3306:3306"
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+  waf:
+    image: owasp/modsecurity-crs:nginx
+    ports:
+      - "80:8080"
+    environment:
+      - MODSEC_RULE_ENGINE=On
+      - BACKEND=http://web-app:8000
+    volumes:
+      - ./my_sqli_rules.conf:/etc/modsecurity.d/owasp-crs/rules/RESPONSE-999-EXCLUSIONS.conf
+    depends_on:
+      - web-app
   web-app:
     build: .
     restart: on-failure
@@ -15,16 +26,7 @@ services:
       - "8080:8000"
     volumes:
       - .:/code
-    env_file: 
+    env_file:
       - .env
     depends_on:
-      - db-server 
-  waf:
-    image: owasp/modsecurity-crs:nginx
-    restart: on-failure
-    ports:
-    - "80:8080"
-    environment:
-    - BACKEND=http://web-app:8000
-    depends_on:
-    - web-app
+      - db-server
